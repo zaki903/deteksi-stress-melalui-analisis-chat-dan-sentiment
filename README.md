@@ -1,134 +1,40 @@
-# 🧠 Deteksi Stress melalui analisis chat dan sentiment
+<p align="center">
+    <img src="/img/logo_hd_whitebg.png" height="150">
+</p>
 
-## 📌 Deskripsi Singkat
+# Stress Chat Detector
+Sebuah aplikasi untuk deteksi stress yang dapat membantu individu mengenali stress berdasarkan analisis chat.
 
-Proyek ini merupakan sistem deteksi emosi pengguna berbasis teks, yang mengklasifikasikan input menjadi **Positif** atau **Negatif** menggunakan model deep learning (Bidirectional LSTM) yang dilatih dengan data Bahasa Indonesia. Model akhir disimpan dalam format `.h5` dan digunakan melalui API Flask.
+## Dokumentasi
+[Frontend](https://github.com/capstone-project-analisis-sentiment/deteksi-stress-dengan-analisis-chat-dan-sentiment/tree/main/Frontend)
 
----
+[Backend](https://github.com/capstone-project-analisis-sentiment/deteksi-stress-dengan-analisis-chat-dan-sentiment/tree/main/Backend)
 
-## 🧠 Teknologi yang Digunakan
+[Machine Learning](https://github.com/capstone-project-analisis-sentiment/deteksi-stress-dengan-analisis-chat-dan-sentiment/tree/main/Machine-Learning)
 
-* **Bahasa:** Python
-* **Library Utama:**
 
-  * `TensorFlow`, `Keras`
-  * `scikit-learn`
-  * `NumPy`, `Pandas`
-  * `NLTK`, `re` untuk preprocessing
-* **Model:** Bidirectional LSTM
-* **Deployment:** Flask
-* **Ekspor Model:** `model.h5`, `tokenizer.json`
+## Penggunaan
+- anda akan melihat tampilan utama setelah buka web analisis stress<br>
+![Landing Page](/img/utama.png)
 
----
+- setelah tampil halaman utama selanjutnya klik menu detector untuk analisis tingkat stress <br>
+![Login Page](/img/detector.png)
 
-## 🔄 Alur Machine Learning
+- selanjutnya silakan upload screenshot yang ingin di prediksi lalu tekan analisis tingkat stress<br>
+![Analisis Now!](/img/prediksi.png)
 
-### 1. **Data Preprocessing**
+- Dan ini hasil analisisnya <br>
+![Result](img/hasil.png)
 
-* Pembersihan teks: lowercase, hapus tanda baca, angka, dan karakter spesial
-* Konversi slang word Bahasa Indonesia
-* Tokenisasi dan padding (`maxlen=30`)
-* Encoding label (`LabelEncoder`)
-* Pembagian data: 80% training, 20% testing
+## produk kami
+Buka sekarang web kami untuk informasi lebih lanjut [Stress Chat Detector](https://stress-chat-detector.vercel.app/) <br>
 
-### 2. **Penanganan Class Imbalance**
-
-* Menggunakan `class_weight='balanced'` dari `sklearn.utils.class_weight`
-
-### 3. **Arsitektur Model (Modeling)**
-
-Model yang dibangun menggunakan **Bidirectional LSTM** dengan embedding layer untuk merepresentasikan kata dalam vektor numerik. Arsitektur ini dipilih karena mampu menangkap konteks kata dalam kedua arah (sebelum dan sesudah), yang penting dalam analisis teks.
-
-#### 🔧 Arsitektur Lengkap:
-
-```python
-model = Sequential()
-model.add(Embedding(input_dim=5000, output_dim=128, input_length=30))
-model.add(Bidirectional(LSTM(64, dropout=0.3, recurrent_dropout=0.3)))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(2, activation='softmax'))
-```
-
-#### 📊 Ringkasan Model:
-
-| Layer                | Output Shape    | Param #     |
-| -------------------- | --------------- | ----------- |
-| Embedding            | (None, 30, 128) | 640.000     |
-| Bidirectional LSTM   | (None, 128)     | 99.840      |
-| Dense (ReLU)         | (None, 64)      | 8.256       |
-| Dense (Softmax)      | (None, 2)       | 130         |
-| **Total Parameters** |                 | **748.226** |
-
-#### ⚙️ Detail Konfigurasi:
-
-* **Loss Function**: `sparse_categorical_crossentropy`
-* **Optimizer**: `adam`
-* **Metrics**: `accuracy`
-* **Callbacks**:
-
-  * `EarlyStopping` (monitor `val_loss`, patience = 3)
-  * `ReduceLROnPlateau` (monitor `val_loss`, factor = 0.2)
-
-#### 🧪 Hasil Training:
-
-* Akurasi validasi akhir: **sekitar 83%**
-* Model disimpan sebagai: `model_saya.h5`
-* Tokenizer disimpan sebagai: `tokenizer.json`
-
----
-
-## 📦 File Output
-
-```
-model/
-└── model_saya.h5
-
-tokenizer/
-└── tokenizer.json
-```
-
----
-
-## 🚀 Prediksi (Inferensi)
-
-```python
-def predict_text(text, model, tokenizer, label_encoder, maxlen=30):
-    sequence = tokenizer.texts_to_sequences([text])
-    padded = pad_sequences(sequence, maxlen=maxlen)
-    prediction = model.predict(padded)
-    predicted_index = np.argmax(prediction)
-    label = label_encoder.inverse_transform([predicted_index])[0]
-    confidence = prediction[0][predicted_index]
-    return label, confidence
-```
-
----
-
-## 🔍 Contoh Input & Output
-
-**Input:**
-
-```
-"Aku merasa sangat sedih dan tidak punya semangat."
-```
-
-**Output:**
-
-```
-Label: Negative
-Confidence: 91.2%
-```
-
----
-
-## 💡 Pengembangan Selanjutnya
-
-* Dukungan untuk multi-label emosi (marah, takut, sedih, senang, dll)
-* Penambahan fitur analisis tren emosi harian pengguna
-* Integrasi dengan platform chatbot/webhook API
-
----
-
-## 📄 Lisensi & Kontribusi
-
-Open source untuk keperluan edukasi dan eksperimen lanjutan. Kontribusi sangat terbuka untuk pengembangan lebih lanjut.
+## Tim Kami
+| Name              | University                             | Student ID    | Learning Path      |
+|-------------------|----------------------------------------|---------------|--------------------|
+| Rizaki Akbar      | Universitas Islam Kebangsaan Indonesia | MC436D5Y0920  | Machine Learning   |
+| Agni Musadad      | Universitas Siliwangi                  | MC313D5Y2297  | Machine Learning   |
+| Mansur            | Universitas Abulyatama                 | MC423D5Y2006  | Machine Learning   |
+| Kuinsi Manda Aulia Hutasoit  | Politeknik Baja Tegal       | FC796D5X0086  | Frontend & Backend |
+| Aulia Annisa      | Politeknik Baja Tegal                  | FC796D5X0097  | Frontend & Backend |
+| Firani Nur Anjani | Politeknik Baja Tegal                  | FC796D5X0082  | Frontend & Backend |
